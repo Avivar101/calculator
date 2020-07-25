@@ -4,6 +4,10 @@
     box-sizing: inherit;
 }
 
+body {
+    background-color: darkblue;
+}
+
 .calculator {
   border: 1px solid rgb(194, 139, 139);
   border-radius: 5px;
