@@ -28,7 +28,8 @@ keys.addEventListener('click', (event) => {
     }
 
     if(target.classList.contains('operator')) {
-        console.log('operator', target.value);
+        handleOPerator(target.value);
+        updateDisplay;
         return;
     }
 
@@ -38,12 +39,14 @@ keys.addEventListener('click', (event) => {
     }
 
     if (target.classList.contains('decimal')) {
-        console.log('decimal', target.value);
+        inputDecimal(target.value);
+        updateDisplay();
         return;
     }
 
     if (target.classList.contains('allClear')) {
-        console.log('allClear', target.value);
+        resetCalculator();
+        updateDisplay();
         return;
     }
     if (target.classList.contains('backSpace')) {
@@ -58,8 +61,48 @@ keys.addEventListener('click', (event) => {
 
 
 function inputDigit(digit) {
-    const {displayValue} = calculator;
-    //check if displayValue equals zero then replace it with input
-    calculator.displayValue = displayValue === 0 ? digit : displayValue + digit;
+    const { displayValue, waitingForSecondOperand } = calculator;
+  
+    if (waitingForSecondOperand === true) {
+      calculator.displayValue = digit;
+      calculator.waitingForSecondOperand = false;
+    } else {
+      calculator.displayValue = displayValue === 0 ? digit : displayValue + digit;
+    }
+  
+    console.log(calculator);
+  }
+  
+
+function inputDecimal(dot) {
+
+
+    if (!calculator.displayValue.includes(dot)) {
+        calculator.displayValue +=  dot;
+    }
 }
 
+function resetCalculator() {
+    calculator.displayValue = 0;
+    calculator.firstOperand = null;
+    calculator.waitingForSecondOperand = false;
+    calculator.operator = null;
+    console.log(calculator);
+}
+  
+function handleOPerator(nextOperator) {
+    //DEstructure the itmes in calculator
+    const {firstOperand, operator, displayValue} = calculator;
+
+    const inputValue = parseFloat(displayValue);
+
+    //verify that firstOperand is null and that the inputValue is not a NaN value
+    if (firstOperand === null && !isNaN(inputValue)) {
+        calculator.firstOperand = inputValue;
+    }
+
+    calculator.wiatingForSecondOperand = true;
+    calculator.operator = nextOperator;
+
+    console.log(calculator);
+}
