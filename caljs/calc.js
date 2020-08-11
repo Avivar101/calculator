@@ -5,14 +5,7 @@ const calculator = ({
     wiatingForSecondOperand: false,
 });
 
-function updateDisplay() {
-    //select the element with the class of displayScreen in other to update the value
-    const display = document.querySelector('.displayScreen');
-    //
-    display.value = calculator.displayValue;
-}
-
-updateDisplay();
+;
 
 
 const keys = document.querySelector('.calcKeys');
@@ -29,7 +22,7 @@ keys.addEventListener('click', (event) => {
 
     if(target.classList.contains('operator')) {
         handleOPerator(target.value);
-        updateDisplay;
+        updateDisplay();
         return;
     }
 
@@ -62,17 +55,17 @@ keys.addEventListener('click', (event) => {
 
 function inputDigit(digit) {
     const { displayValue, waitingForSecondOperand } = calculator;
-  
-    if (waitingForSecondOperand === true) {
-      calculator.displayValue = digit;
-      calculator.waitingForSecondOperand = false;
-    } else {
-      calculator.displayValue = displayValue === 0 ? digit : displayValue + digit;
+    
+    if (waitingForSecondOperand == "true") {
+        calculator.displayValue = digit;
+        calculator.wiatingForSecondOperand = false;
     }
-  
+    else {
+         calculator.displayValue = displayValue === 0 ? digit : displayValue + digit;
+    }
     console.log(calculator);
-  }
-  
+    
+}
 
 function inputDecimal(dot) {
 
@@ -89,20 +82,29 @@ function resetCalculator() {
     calculator.operator = null;
     console.log(calculator);
 }
-  
+
 function handleOPerator(nextOperator) {
-    //DEstructure the itmes in calculator
-    const {firstOperand, operator, displayValue} = calculator;
+    const { firstOperand, displayValue, operator } =  calculator;
 
     const inputValue = parseFloat(displayValue);
 
-    //verify that firstOperand is null and that the inputValue is not a NaN value
     if (firstOperand === null && !isNaN(inputValue)) {
         calculator.firstOperand = inputValue;
+        
     }
 
     calculator.wiatingForSecondOperand = true;
-    calculator.operator = nextOperator;
 
+
+    calculator.operator = nextOperator;
     console.log(calculator);
 }
+
+function updateDisplay() {
+    //select the element with the class of displayScreen in other to update the value
+    const display = document.querySelector('.displayScreen');
+    //
+    display.value = calculator.displayValue;
+}
+
+updateDisplay()
